@@ -1,5 +1,7 @@
 import os
-from datetime import datetime, timedelta
+
+import datetime
+
 
 DATA_FILENAME = os.path.dirname(__file__) + '/book.txt'
 
@@ -14,10 +16,11 @@ def load_data():
 
 def store_data(entries):
     with open(DATA_FILENAME, 'w') as data_file:
-        print >> data_file, repr(entries)
+        print >>data_file, repr(entries)
 
 
 class AddressBook(object):
+
     def __init__(self):
         self.notes = []
         self.read_notes()
@@ -33,13 +36,17 @@ class AddressBook(object):
     def add_user(self):
         new_note = Note()
 
+    # def Reminder(self):
+    #   now = datetime.now()
+    #     datetime.strftime(datetime.now(), "%Y.%m.%d")
+
         while True:
             input_str = raw_input(u'Add a name\n')
             if input_str.isalpha() and len(input_str) < 10:
                 new_note.name = input_str
                 break
             else:
-                print u'Make sure that you are using only letter and your Name lengt less that 10 digits'
+                print u'Make sure that you are using only letter and your Name length less that 10 digits'
         while True:
             input_str = raw_input(u'Add a phone number without +\n')
             if input_str.isdigit() and len(input_str) == 11:
@@ -48,7 +55,7 @@ class AddressBook(object):
             else:
                 print u'Make sure that you are using only digits and your phone number equals to 11'
         while True:
-            input_str = raw_input(u'Type Date: YYYY.MM.DD:\n')
+            input_str = raw_input(u'Add a birthday: YYYY.MM.DD:\n')
             try:
                 input_str = input_str.split('.')
                 date = datetime.date(int(input_str[0]), int(input_str[1]), int(input_str[2]))
@@ -56,11 +63,11 @@ class AddressBook(object):
                 break
             except:
                 print u'Invalid Format!'
-                # input_str = raw_input(u'Add a birthday\n')
-                # if input_str.isdigit():
-                #     self.BirthDate = input_str
-                #     break
-                # else: print (u'Use only digits please')
+            # input_str = raw_input(u'Add a birthday\n')
+            # if input_str.isdigit():
+            #     self.BirthDate = input_str
+            #     break
+            # else: print (u'Use only digits please')
         print u'DONE'
         self.notes.append(new_note)
         store_data(self.notes)
@@ -70,11 +77,8 @@ class AddressBook(object):
         store_data(self.notes)
 
 
-
-
-
-
 class Note(object):
+
     def __init__(self, initial=None):
         self.name = ''
         self.phone_number = ''
@@ -102,17 +106,16 @@ Choose the option
 2. Add a new user
 3. Delete a user
 4.Exit
-       '''
+        '''
         user_input = raw_input()
         if user_input == '1':
             new_user.show_users()
-            new_user.Reminder()
         elif user_input == '2':
             new_user.add_user()
             new_user.show_users()
         elif user_input == '3':
             new_user.show_users()
-            new_user.delete_note(raw_input('Select a contact by a number'))
+            new_user.delete_note(raw_input('Select a contact by a number\n'))
         elif user_input == '4':
             break
         else:
